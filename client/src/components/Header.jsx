@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Cookies from "js-cookie";
 import logo from "../images/logo.jpeg";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,8 +11,18 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    Cookies.remove("user");
-    alert("logout successfully");
+    Swal.fire({
+      icon: "success",
+      title: "Logged out!",
+      text: "You have successfully logged out.",
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    }).then(() => {
+      Cookies.remove("user");
+      navigate("/login"); // Redirect to login after logout
+    });
+  
     setIsMenuOpen(false);
   };
 

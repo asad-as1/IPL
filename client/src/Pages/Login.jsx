@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Login as LoginUser } from "../api/user.api";
@@ -9,9 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-
   const handleLogin = async (data) => {
-    // Check if username contains spaces
     if (/\s/.test(data.username)) {
       setError("username", { type: "manual", message: "Invalid username" });
       return;
@@ -19,18 +18,31 @@ const Login = () => {
 
     try {
       const res = await LoginUser(data);
-      // console.log(data);
       if (res.status === 200) {
-        alert("Successfully logged in");
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          text: "You have successfully logged in!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         navigate("/");
       } else {
-        alert(`${res?.response?.data?.message}`);
+        Swal.fire({
+          icon: "error",
+          title: "Login Failed",
+          text: res?.response?.data?.message || "Something went wrong!",
+        });
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred. Please try again later.",
+      });
     }
     reset();
-  }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-pink-200 via-blue-300 to-purple-200">
@@ -45,9 +57,7 @@ const Login = () => {
             type="text"
             placeholder="Username"
             className="w-full p-3 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            {...register("username", {
-              required: true,
-            })}
+            {...register("username", { required: true })}
           />
           <FaUser className="absolute right-3 top-3 text-gray-400" />
           {errors.username && (
@@ -60,20 +70,13 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             className="w-full p-3 pr-10 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            {...register("password", {
-              required: true,
-            })}
+            {...register("password", { required: true })}
           />
           <div
             className="absolute right-3 top-4 flex items-center cursor-pointer"
-            style={{ width: '20px' }} // Ensures consistent width for the icon container
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? (
-              <FaEyeSlash className="text-gray-500" />
-            ) : (
-              <FaEye className="text-gray-500" />
-            )}
+            {showPassword ? <FaEyeSlash className="text-gray-500" /> : <FaEye className="text-gray-500" />}
           </div>
         </div>
 

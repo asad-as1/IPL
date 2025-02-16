@@ -3,6 +3,7 @@ import { FaUser, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Register as RegisterUser, Login as LoginUser } from "../api/user.api";
+import Swal from "sweetalert2";
 
 const Registration = () => {
   const {
@@ -16,7 +17,6 @@ const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = async (data) => {
-    // Check if username contains spaces
     if (/\s/.test(data.username)) {
       setError("username", { type: "manual", message: "Username cannot contain spaces" });
       return;
@@ -25,18 +25,35 @@ const Registration = () => {
     try {
       const res = await RegisterUser(data);
       if (res.status === 200) {
-        alert("Successfully registered");
+        Swal.fire({
+          icon: "success",
+          title: "Successfully registered",
+          showConfirmButton: false,
+          timer: 1500,
+        });
 
-        // Automatically log the user in
         const loginRes = await LoginUser({ username: data.username, password: data.password });
         if (loginRes.status === 200) {
-          alert("Successfully logged in");
+          Swal.fire({
+            icon: "success",
+            title: "Successfully logged in",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate("/");
         } else {
-          alert(`${loginRes.response.data.message}`);
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text: loginRes.response.data.message,
+          });
         }
       } else {
-        alert(`${res.response.data.message}`);
+        Swal.fire({
+          icon: "error",
+          title: "Registration Failed",
+          text: res.response.data.message,
+        });
       }
     } catch (error) {
       console.error(error);
