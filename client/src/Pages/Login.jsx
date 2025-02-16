@@ -24,7 +24,7 @@ const Login = () => {
         alert("Successfully logged in");
         navigate("/");
       } else {
-        alert(`${res.response.data.message}`);
+        alert(`${res?.response?.data?.message}`);
       }
     } catch (error) {
       console.log(error);

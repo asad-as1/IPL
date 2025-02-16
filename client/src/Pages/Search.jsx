@@ -8,6 +8,7 @@ import PlayerProfile from "../components/PlayerProfile";
 const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // Added state for error message
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const name = searchParams.get("name");
@@ -23,15 +24,20 @@ const SearchBox = () => {
     if (!term.trim()) return;
 
     setIsLoading(true);
+    setErrorMessage(""); // Reset error message
     try {
       const fetchedBattingResults = await getBatter(term);
       const fetchedBowlingResults = await getBowler(term);
 
-      // Replace this logic with what you need to do with the results
-      // console.log("Batting Results:", fetchedBattingResults);
-      // console.log("Bowling Results:", fetchedBowlingResults);
+      if (!fetchedBattingResults && !fetchedBowlingResults) {
+        setErrorMessage("No data found for this player.");
+      }
+      setSearchTerm("");
+      // handleSearch('');
     } catch (error) {
+      setIsLoading(false);
       console.error("Error during search:", error);
+      setErrorMessage("No data found for this player.");
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +57,10 @@ const SearchBox = () => {
 
   return (
     <>
-      <div className=" mb-96 max-w-xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+      <div className="mt-28 mb-96 max-w-xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+        <p className="text-md text-gray-800 text-center mb-4">
+          ⚠️ Enter the full name of the player for accurate results.
+        </p>
         {/* Search Input */}
         <div className="flex justify-center items-center space-x-2 mb-6">
           <div className="relative flex-grow">
@@ -84,8 +93,14 @@ const SearchBox = () => {
           </motion.button>
         </div>
       </div>
-      {/* Player Profile Component */}
-      {name && <PlayerProfile />}
+      {/* Error Message */}
+      {errorMessage ? (
+        <div className="text-center text-red-500 font-semibold mt-4">
+          {errorMessage}
+        </div>
+      ) : (
+        name && <PlayerProfile />
+      )}
     </>
   );
 };

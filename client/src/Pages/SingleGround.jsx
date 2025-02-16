@@ -28,22 +28,23 @@ const SingleGround = () => {
   if (error) return <h2 className="text-center mt-4 text-xl text-red-500">Error: {error}</h2>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto text-center">
-      <div className="flex justify-center space-x-4 mb-6">
+    <div className="mt-24 p-6 max-w-4xl mx-auto text-center">
+      {/* Responsive Image Layout */}
+      <div className="flex flex-col md:flex-row md:justify-center md:space-x-4 mb-6 space-y-4 md:space-y-0">
         <img 
           src={ground.images[0].url} 
           alt="Ground View 1" 
-          className="w-3/4 h-auto rounded-lg shadow-lg" 
+          className="w-full md:w-3/4 h-auto rounded-lg shadow-lg" 
         />
         <img 
           src={ground.images[1].url} 
           alt="Ground View 2" 
-          className="w-3/4 h-auto rounded-lg shadow-lg" 
+          className="w-full md:w-3/4 h-auto rounded-lg shadow-lg" 
         />
       </div>
-      
+
       <h1 className="text-4xl font-bold mb-6">{ground.name}</h1>
-      
+
       <div className="text-lg space-y-4">
         <p><strong>Pitch Type:</strong> {ground.pitchType}</p>
         <p><strong>Capacity:</strong> {ground.capacity} People</p>

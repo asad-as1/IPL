@@ -44,7 +44,6 @@ const PlayerProfile = () => {
       }
     };
 
-
     const fetchPlayersVenue = async () => {
       try {
         const res = await getPlayerVenue(name);
@@ -111,13 +110,13 @@ const PlayerProfile = () => {
     switch (activeTab) {
       case "bio":
         return (
-          <div className="grid grid-cols-2 gap-6 p-6 bg-white rounded-lg shadow-md">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-lg shadow-md">
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-800 border-b pb-2">
                 Player Biography
               </h2>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex items-center gap-2 col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
                   <UserCircle2 className="text-blue-500 flex-shrink-0" />
                   <div>
                     <span className="font-semibold mr-2">Name:</span>
@@ -129,15 +128,19 @@ const PlayerProfile = () => {
                   <span className="font-semibold mr-2">Role:</span>
                   <span>{filteredPlayer.role}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <MapPinIcon className="text-green-500 flex-shrink-0" />
-                  <span className="font-semibold mr-2">Country:</span>
-                  <span>{filteredPlayer.country}</span>
-                </div>
-                <div className="flex items-center gap-2 col-span-2">
+
+                <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
                   <CalendarDaysIcon className="text-red-500 flex-shrink-0" />
                   <span className="font-semibold mr-2">DOB:</span>
                   <span>{filteredPlayer.DOB.split("T")[0]}</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2 w-full flex-wrap">
+                <MapPinIcon className="text-green-500 flex-shrink-0" />
+                <div className="font-semibold whitespace-nowrap">Country:</div>
+                <div className="flex-1 break-words">
+                  {filteredPlayer.country}
                 </div>
               </div>
             </div>
@@ -145,7 +148,7 @@ const PlayerProfile = () => {
               <h2 className="text-2xl font-bold text-gray-800 border-b pb-2">
                 Career Highlights
               </h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <p className="font-semibold text-gray-600">Matches Played</p>
                   <p className="text-2xl text-blue-600">
@@ -168,6 +171,7 @@ const PlayerProfile = () => {
             </div>
           </div>
         );
+
       case "stats":
         return (
           <AnimatePresence>
@@ -295,8 +299,8 @@ const PlayerProfile = () => {
     <div className="w-full -mt-80 mx-auto bg-gray-50 min-h-screen">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-12">
-        <div className="flex items-center space-x-8">
-          <div className="w-1/3">
+        <div className="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0">
+          <div className="w-full md:w-1/3">
             {filteredPlayer?.img ? (
               <img
                 src={filteredPlayer.img}
@@ -309,8 +313,10 @@ const PlayerProfile = () => {
               </div>
             )}
           </div>
-          <div className="w-2/3">
-            <h1 className={`font-extrabold mb-4 flex flex-wrap gap-2`}>
+          <div className="w-full md:w-2/3 text-center md:text-left">
+            <h1
+              className={`font-extrabold mb-4 flex flex-wrap gap-2 justify-center md:justify-start`}
+            >
               {filteredPlayer?.name.split(" ").map((namePart, index) => (
                 <span
                   key={index}
@@ -327,7 +333,7 @@ const PlayerProfile = () => {
                 </span>
               ))}
             </h1>
-            <div className="text-xl flex items-center space-x-4 opacity-80">
+            <div className="text-xl flex justify-center md:justify-start items-center space-x-4 opacity-80">
               <span>{filteredPlayer?.role.toUpperCase()}</span>
               <span>•</span>
               <span>{filteredPlayer?.country.toUpperCase()}</span>
@@ -337,7 +343,7 @@ const PlayerProfile = () => {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex justify-center space-x-4 py-6 bg-white shadow-sm">
+      <div className="flex flex-wrap justify-center gap-2 sm:space-x-4 py-6 bg-white shadow-sm">
         <TabButton tab="bio" icon={UserCircle2}>
           Biography
         </TabButton>

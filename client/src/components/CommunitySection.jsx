@@ -71,7 +71,7 @@ const CommunitySection = () => {
                 <motion.div
                   key={index}
                   whileHover={{ scale: 1.03 }}
-                  className="bg-white/10 rounded-xl p-6 backdrop-blur-sm"
+                  className="bg-white/10 rounded-xl p-2 backdrop-blur-sm"
                 >
                   <div className="flex items-center mb-4">
                     <img 

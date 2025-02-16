@@ -15,8 +15,9 @@ const connectDb = async() => {
 connectDb()
 
 
-const port = process.env.PORT
+const port = 5000
 const app = require("./app")
+
 app.get('/', (req, res) => {
     res.send('Server is running on port');
   });

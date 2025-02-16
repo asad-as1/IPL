@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, LayoutGroup } from "framer-motion";
-import {
-  Award,
-  Video,
-  Search,
-  Users,
-  MapPin,
-} from "lucide-react";
+import { Award, Video, Search, Users, MapPin } from "lucide-react";
 import "../styles/Home.css";
 import srh from "../images/srh.jpeg";
 import kkr from "../images/kkr.jpeg";
@@ -181,7 +175,7 @@ const Home = () => {
       className="min-h-screen w-full bg-gray-50"
     >
       {/* Animated Carousel */}
-      <div className=" w-full flex mt-8 justify-center ">
+      <div className=" w-full flex mt-32 justify-center ">
         <ImageCarousel images={images} />
       </div>
       {/* Points Table */}
@@ -203,7 +197,10 @@ const Home = () => {
             <div className="points-table">
               <div className=" flex">
                 {teams.map((team) => (
-                  <div key={team.position} className="team-card boss  shadow-md">
+                  <div
+                    key={team.position}
+                    className="team-card boss  shadow-md"
+                  >
                     <div className="top">
                       <div className="team-rank">{team.position}</div>
                       <h1 className="team-name">{team.name}</h1>
@@ -282,41 +279,47 @@ const Home = () => {
       </motion.div>
 
       {/* Videos Section */}
-      <div style={{ height: "400px" }} className="w-full  relative">
+      <div className="w-full relative py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className=" mx-auto w-full h-[90%] flex m-8  flex-col  bg-[#FED607]  py-12 px-4"
+          className="mx-auto w-full bg-[#FED607] py-8 md:py-12 px-4"
         >
-          <h2 className="font-black text-4xl  mb-8 flex items-center">
-            <Video className="mr-3 text-black  " /> FROM THE VAULT
+          <h2 className="font-black text-2xl md:text-4xl mb-6 md:mb-8 flex items-center">
+            <Video className="mr-3 text-black" /> FROM THE VAULT
           </h2>
-          <div className=" absolute h-[60%] bottom-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          {/* Updated video grid with better responsive layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {videos.map((video, index) => (
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="bg-black text-white overflow-hidden shadow-lg rounded-lg md:rounded-none md:hover:shadow-xl transition-shadow duration-300"
                 style={{
-                  clipPath: "polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%)", // Fixed clip-path
+                  clipPath: "polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%)",
                 }}
-                className="bg-black text-white overflow-hidden shadow-lg"
               >
-                <div className="aspect-w-16 aspect-h-4">
-                  <iframe
-                    className="w-full h-40"
-                    src={video.videoUrl}
-                    title={video.title}
-                    frameBorder="0"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                <div className="relative w-full">
+                  <div className="aspect-w-16 aspect-h-9">
+                    <iframe
+                      className="w-full h-48 md:h-40 lg:h-48"
+                      src={video.videoUrl}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">{video.title}</h3>
-                  <div className="flex justify-between text-sm text-gray-500">
-                    <span>{video.date}</span>
+                  <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">
+                    {video.title}
+                  </h3>
+                  <div className="flex flex-col md:flex-row justify-between text-sm text-gray-400">
+                    <span className="mb-1 md:mb-0">{video.date}</span>
                     <span>{video.views} Views</span>
                   </div>
                 </div>

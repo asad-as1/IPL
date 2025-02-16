@@ -6,8 +6,8 @@ const {
   getCurrentUser,
 } = require("../controllers/user.controllers");
 
-router.post('/', login);
+router.post('/login', login);
 router.post('/register', register);
 router.post('/getCurrentUser', getCurrentUser);
-//  Router.post('/fetchAllUsersController', fetchAllUsersController);
+
 module.exports = router

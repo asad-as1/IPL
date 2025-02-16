@@ -4,7 +4,7 @@ const URI = `${import.meta.env.VITE_URL}`;
 
 export const Login = async (user) => {
   try {
-    const res = await axios.post(`${URI}/user/`, user);
+    const res = await axios.post(`${URI}/user/login`, user);
     // console.log(res)
     Cookies.set("user", JSON.stringify(res.data.token));  
     return res;

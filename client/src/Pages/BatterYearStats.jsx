@@ -113,8 +113,9 @@ const BatterYearStats = () => {
   const currentMatch = stats[matches[activeMatchIndex]];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4 lg:p-8">
+    <div className="mt-16 min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4 lg:p-8">
       <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {/* Header */}
         <div className="bg-blue-600 text-white p-6 flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center space-x-4">
             <User className="text-white" size={40} />
@@ -147,111 +148,113 @@ const BatterYearStats = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 p-6">
-          <div>
-            <CricketChart data={stats} isBowler={isBowler} />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {!isBowler ? (
-              <>
-                <StatCard
-                  icon={<CandyCane className="text-green-500" />}
-                  label="Total Runs"
-                  value={currentMatch?.runs || 0}
-                />
-                <StatCard
-                  icon={<Clock className="text-blue-500" />}
-                  label="Balls Faced"
-                  value={currentMatch?.bowl || 0}
-                />
-                <StatCard
-                  icon={<BarChart2 />}
-                  label={"Strike Rate"}
-                  value={(
-                    (currentMatch?.runs / currentMatch?.bowl) * 100 || 0
-                  ).toFixed(2)}
-                  color="purple"
-                />
-              </>
-            ) : (
-              <>
-                <StatCard
-                  icon={<Trophy className="text-red-500" />}
-                  label="Bowls"
-                  value={currentMatch?.bowl || 0}
-                />
-                <StatCard
-                  icon={<Trophy className="text-red-500" />}
-                  label="Wickets"
-                  value={currentMatch?.wicket || 0}
-                />
-                <StatCard
-                  icon={<BarChart2 className="text-purple-500" />}
-                  label="Runs Given"
-                  value={currentMatch?.givesRun || 0}
-                />
-                  <StatCard
-                  icon={<BarChart2 />}
-                  label={"Economy Rate"}
-                  value={(
-                    (currentMatch?.wicket !== 0  ? (currentMatch?.bowl / currentMatch?.wicket) : 0)  || 0
-                  ).toFixed(2)}
-                  color="purple"
-                />
-              </>
-            )}
-          </div>
-        </div>
+        {/* Stats & Chart */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+  {/* CricketChart Component */}
+  <div className="h-[350px] sm:h-[400px] md:h-[450px] lg:h-[500px]">
+    <CricketChart data={stats} isBowler={isBowler} />
+  </div>
 
-        <div className="p-6 bg-gray-50">
-          <h3 className="text-xl font-semibold mb-4 text-gray-800">
-            Match Details
-          </h3>
-          <div className="flex overflow-x-auto space-x-4 pb-4">
-            {matches.map((matchKey, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveMatchIndex(index)}
-                className={`flex-shrink-0 p-3 rounded-lg transition-all ${
-                  activeMatchIndex === index
-                    ? "bg-blue-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-blue-100"
-                }`}
-              >
-                <MapPin className="mr-2 inline" size={20} />
-                {stats[matchKey]?.venue || "Unknown"}
-              </button>
-            ))}
-          </div>
+  {/* StatCard Component */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {!isBowler ? (
+      <>
+        <StatCard
+          icon={<CandyCane className="text-green-500" />}
+          label="Total Runs"
+          value={currentMatch?.runs || 0}
+        />
+        <StatCard
+          icon={<Clock className="text-blue-500" />}
+          label="Balls Faced"
+          value={currentMatch?.bowl || 0}
+        />
+        <StatCard
+          icon={<BarChart2 />}
+          label={"Strike Rate"}
+          value={((currentMatch?.runs / currentMatch?.bowl) * 100 || 0).toFixed(2)}
+        />
+      </>
+    ) : (
+      <>
+        <StatCard
+          icon={<Trophy className="text-red-500" />}
+          label="Bowls"
+          value={currentMatch?.bowl || 0}
+        />
+        <StatCard
+          icon={<Trophy className="text-red-500" />}
+          label="Wickets"
+          value={currentMatch?.wicket || 0}
+        />
+        <StatCard
+          icon={<BarChart2 className="text-purple-500" />}
+          label="Runs Given"
+          value={currentMatch?.givesRun || 0}
+        />
+        <StatCard
+          icon={<BarChart2 />}
+          label={"Economy Rate"}
+          value={(
+            (currentMatch?.wicket !== 0 ? currentMatch?.bowl / currentMatch?.wicket : 0) || 0
+          ).toFixed(2)}
+        />
+      </>
+    )}
+  </div>
+</div>
 
-          <div className="mt-6 bg-white rounded-xl shadow-md p-6">
-            <h4 className="text-lg font-bold mb-4 text-gray-800">
-              Match at {currentMatch?.venue || "Unknown"}
-            </h4>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-gray-600">
-                  <strong>Team:</strong> {currentMatch?.team || "N/A"}
-                </p>
-                <p className="text-gray-600">
-                  <strong>Against:</strong>{" "}
-                  {currentMatch?.against_team || "N/A"}
-                </p>
-              </div>
-              <div>
-                <strong>Played with {isBowler ? "Batters" : "Bowlers"}:</strong>
-                <ul className="list-disc pl-5 mt-1 text-gray-600">
-                  {(isBowler
-                    ? currentMatch?.playWithBatters
-                    : currentMatch?.playWithBowlers
-                  )?.map((player, idx) => <li key={idx}>{player}</li>) || (
-                    <li>No data available</li>
-                  )}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+{/* Match Details */}
+<div className="p-6 bg-gray-50">
+  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+    Match Details
+  </h3>
+  <div className="flex overflow-x-auto space-x-4 pb-4">
+    {matches.map((matchKey, index) => (
+      <button
+        key={index}
+        onClick={() => setActiveMatchIndex(index)}
+        className={`flex-shrink-0 p-3 rounded-lg transition-all ${
+          activeMatchIndex === index
+            ? "bg-blue-600 text-white shadow-lg"
+            : "bg-white text-gray-700 hover:bg-blue-100"
+        }`}
+      >
+        <MapPin className="mr-2 inline" size={20} />
+        {stats[matchKey]?.venue || "Unknown"}
+      </button>
+    ))}
+  </div>
+
+  <div className="mt-6 bg-white rounded-xl shadow-md p-6">
+    <h4 className="text-lg font-bold mb-4 text-gray-800">
+      Match at {currentMatch?.venue || "Unknown"}
+    </h4>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <p className="text-gray-600">
+          <strong>Team:</strong> {currentMatch?.team || "N/A"}
+        </p>
+        <p className="text-gray-600">
+          <strong>Against:</strong> {currentMatch?.against_team || "N/A"}
+        </p>
+      </div>
+      <div>
+        <strong>Played with {isBowler ? "Batters" : "Bowlers"}:</strong>
+        <ul className="list-disc pl-5 mt-1 text-gray-600">
+          {(isBowler
+            ? currentMatch?.playWithBatters
+            : currentMatch?.playWithBowlers
+          )?.map((player, idx) => <li key={idx}>{player}</li>) || (
+            <li>No data available</li>
+          )}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
       </div>
     </div>
   );

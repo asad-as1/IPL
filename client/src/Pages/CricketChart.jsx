@@ -197,10 +197,24 @@ const CricketChart = ({ data, isBowler, isVenue, isBettle }) => {
   };
 
   return (
-    <div className="w-full h-full mx-auto mt-10 p-4">
-      <Bar data={chartData} options={chartOptions} />
+    <div className="w-full mx-auto mt-10 p-4 max-w-full">
+      <div className="h-auto sm:h-[300px] md:h-[350px] lg:h-[500px]">
+        <Bar 
+          data={chartData} 
+          options={{
+            ...chartOptions,
+            maintainAspectRatio: false, // ✅ Allow dynamic height
+            responsive: true,
+          }} 
+          height={300} // ✅ Set explicit height
+        />
+      </div>
     </div>
   );
+  
+  
+  
+  
 };
 
 export default CricketChart;
