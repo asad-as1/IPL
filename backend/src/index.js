@@ -18,7 +18,7 @@ connectDb()
 const port = process.env.PORT
 const app = require("./app")
 app.get('/', (req, res) => {
-    res.send('Server is running on port', port);
+    res.send('Server is running on port');
   });
-  
+
 app.listen(port ,console.log("server is running....."))
