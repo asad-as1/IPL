@@ -14,10 +14,11 @@ const connectDb = async() => {
 }
 connectDb()
 
-app.get('/', (req, res) => {
-    res.send('Server is running');
-  });
 
-const app = require("./app")
 const port = process.env.PORT
+const app = require("./app")
+app.get('/', (req, res) => {
+    res.send('Server is running on port', port);
+  });
+  
 app.listen(port ,console.log("server is running....."))
