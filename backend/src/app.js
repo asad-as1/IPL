@@ -5,6 +5,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 dotenv.config();
+
+
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
@@ -16,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
 app.use(cookieParser());
+
 
 const matchRouter = require("./routers/match.routes");
 app.use("/api/match", matchRouter);
