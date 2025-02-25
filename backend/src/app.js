@@ -26,9 +26,6 @@ app.use("/api/match", matchRouter);
 const playerRouter = require("./routers/player.routes");
 app.use("/api/player", playerRouter);
 
-const userRouter = require("./routers/user.routes");
-app.use("/api/user", userRouter);
-
 const ground = require("./routers/ground.routes");
 app.use("/api/ground", ground);
 

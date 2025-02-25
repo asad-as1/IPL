@@ -8,8 +8,6 @@ import {
   createRoutesFromElements,
   Navigate,
 } from "react-router-dom";
-import Login from "./Pages/Login.jsx";
-import Registration from "./Pages/Registration.jsx";
 import Home from "./Pages/Home.jsx";
 import Venues from "./Pages/Venues.jsx";
 import Team from "./Pages/Team.jsx";
@@ -24,43 +22,37 @@ import VenueYearStats from "./Pages/VenueYearStats.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import Battle from "./Pages/Battle.jsx";
 
-const ProtectedRoute = ({ element }) => {
-  let token = Cookies.get("user");
-  return token ? element : <Navigate to="/login" replace />;
-};
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Registration />} />
-      <Route path="/venues" element={<ProtectedRoute element={<Venues />} />} />
-      <Route path="/search" element={<ProtectedRoute element={<Search />} />} />
+      <Route path="/venues" element={<Venues />} />
+      <Route path="/search" element={<Search />} />
       <Route
         path="/venues/:id"
-        element={<ProtectedRoute element={<SingleGround />} />}
+        element={<SingleGround />}
       />
-      <Route path="/teams" element={<ProtectedRoute element={<Team />} />} />
+      <Route path="/teams" element={<Team />} />
       <Route
         path="/players"
-        element={<ProtectedRoute element={<Players />} />}
+        element={<Players />}
       />
       <Route
         path="/player/:id"
-        element={<ProtectedRoute element={<SinglePlayer />} />}
+        element={<SinglePlayer />}
       />
       <Route
         path="/player"
-        element={<ProtectedRoute element={<BatterYearStats />} />}
+        element={<BatterYearStats />}
       />
       <Route
         path="/venue"
-        element={<ProtectedRoute element={<VenueYearStats />} />}
+        element={<VenueYearStats />}
       />
       <Route
         path="/battle"
-        element={<ProtectedRoute element={<Battle />} />}
+        element={<Battle />}
       />
       <Route
         path= "*"

@@ -1,38 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import Cookies from "js-cookie";
 import logo from "../images/logo.jpeg";
-import Swal from "sweetalert2";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const token = Cookies.get("user");
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    Swal.fire({
-      icon: "success",
-      title: "Logged out!",
-      text: "You have successfully logged out.",
-      timer: 2000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-    }).then(() => {
-      Cookies.remove("user");
-      navigate("/login"); // Redirect to login after logout
-    });
-  
-    setIsMenuOpen(false);
-  };
 
   const menuItems = [
     { label: "Home", path: "/" },
-    { label: "Venues", path: "/venues" },
     { label: "Players", path: "/players" },
-    { label: "Teams", path: "/teams" },
+    { label: "Venues", path: "/venues" },
     { label: "Search", path: "/search" },
     { label: "Battle", path: "/battle" },
+    { label: "Teams", path: "/teams" },
   ];
 
   const toggleMenu = () => {
@@ -72,22 +52,6 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
-          {token ? (
-            <Link
-              onClick={handleLogout}
-              className="text-md hover:text-blue-300 transition-colors"
-              to="/login"
-            >
-              Logout
-            </Link>
-          ) : (
-            <Link
-              className="text-md hover:text-blue-300 transition-colors"
-              to="/login"
-            >
-              Login
-            </Link>
-          )}
         </div>
   
         {/* Hamburger Menu Button for Mobile */}
@@ -121,23 +85,6 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
-          {token ? (
-            <Link
-              onClick={handleLogout}
-              className="text-white text-lg hover:text-blue-300 transition-colors"
-              to="/login"
-            >
-              Logout
-            </Link>
-          ) : (
-            <Link
-              className="text-white text-lg hover:text-blue-300 transition-colors"
-              to="/login"
-              onClick={closeMenu}
-            >
-              Login
-            </Link>
-          )}
         </div>
       </div>
     </nav>

@@ -44,8 +44,8 @@ function Battle() {
         return;
       }
 
-      setBowlerName(res?.data?.batterdata?.[0]?.name || "Unknown Bowler");
-      setBatterName(res?.data?.bowlerdata?.[0]?.name || "Unknown Batsman");
+      setBowlerName(res?.data?.batterdata?.[0]?.name || "Unknown Player");
+      setBatterName(res?.data?.bowlerdata?.[0]?.name || "Unknown Player");
 
       const battingStats = res?.data?.batterdata?.[0]?.stats?.years || null;
       const bowlingStats = res?.data?.bowlerdata?.[0]?.stats?.years || null;
