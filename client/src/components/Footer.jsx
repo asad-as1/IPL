@@ -148,6 +148,7 @@ const Footer = () => {
         <p className="text-gray-400">
           &copy; {new Date().getFullYear()} IplCrux. All Rights Reserved.
         </p>
+        <h2>Made By: <strong>Mohd Asad Ansari</strong></h2>
       </motion.div>
     </footer>
   );
